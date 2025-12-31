@@ -12,7 +12,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/novacoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
 )
 
 // FrontierEntry represents a finalized block on the frontier.

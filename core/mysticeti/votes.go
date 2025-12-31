@@ -4,7 +4,7 @@ package mysticeti
 import (
 	"sync"
 
-	"github.com/novacoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
 )
 
 // ImplicitVote represents a vote derived from DAG structure.

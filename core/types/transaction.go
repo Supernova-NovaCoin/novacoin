@@ -7,8 +7,8 @@ import (
 	"math/big"
 	"sync/atomic"
 
-	"github.com/novacoin/novacoin/core/state"
-	"github.com/novacoin/novacoin/crypto"
+	"github.com/Supernova-NovaCoin/novacoin/core/state"
+	"github.com/Supernova-NovaCoin/novacoin/crypto"
 )
 
 // TxType represents the transaction type.

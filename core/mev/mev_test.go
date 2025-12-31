@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/novacoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
 )
 
 func testAddress(index uint32) dag.Address {

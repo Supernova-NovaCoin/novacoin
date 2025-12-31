@@ -8,7 +8,7 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/novacoin/novacoin/crypto"
+	"github.com/Supernova-NovaCoin/novacoin/crypto"
 )
 
 // Address represents a 20-byte account address (EVM compatible).

@@ -4,7 +4,7 @@ package ghostdag
 import (
 	"sort"
 
-	"github.com/novacoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
 )
 
 // ColoringResult contains the result of coloring a vertex.

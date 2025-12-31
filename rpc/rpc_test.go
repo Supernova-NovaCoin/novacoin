@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/novacoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
 )
 
 // === Test Types ===

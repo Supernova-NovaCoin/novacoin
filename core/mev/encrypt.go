@@ -8,8 +8,8 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/novacoin/novacoin/core/dag"
-	"github.com/novacoin/novacoin/crypto"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/crypto"
 )
 
 // EncryptedTransaction represents an encrypted transaction.

@@ -4,7 +4,7 @@ package evm
 import (
 	"math/big"
 
-	"github.com/novacoin/novacoin/core/state"
+	"github.com/Supernova-NovaCoin/novacoin/core/state"
 )
 
 // Contract represents a contract in the EVM.

@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/novacoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
 )
 
 // PeerID represents a unique peer identifier (derived from public key).

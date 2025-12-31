@@ -5,7 +5,7 @@ import (
 	"math/big"
 	"sync"
 
-	"github.com/novacoin/novacoin/crypto"
+	"github.com/Supernova-NovaCoin/novacoin/crypto"
 )
 
 // StateDB is the main state database that provides access to accounts,

@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/novacoin/novacoin/core/dag"
-	"github.com/novacoin/novacoin/crypto"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/crypto"
 )
 
 // HostConfig holds P2P host configuration.

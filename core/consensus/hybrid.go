@@ -22,14 +22,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/novacoin/novacoin/core/dag"
-	"github.com/novacoin/novacoin/core/dagknight"
-	"github.com/novacoin/novacoin/core/ghostdag"
-	"github.com/novacoin/novacoin/core/mev"
-	"github.com/novacoin/novacoin/core/mysticeti"
-	"github.com/novacoin/novacoin/core/pos"
-	"github.com/novacoin/novacoin/core/shoal"
-	"github.com/novacoin/novacoin/core/state"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dagknight"
+	"github.com/Supernova-NovaCoin/novacoin/core/ghostdag"
+	"github.com/Supernova-NovaCoin/novacoin/core/mev"
+	"github.com/Supernova-NovaCoin/novacoin/core/mysticeti"
+	"github.com/Supernova-NovaCoin/novacoin/core/pos"
+	"github.com/Supernova-NovaCoin/novacoin/core/shoal"
+	"github.com/Supernova-NovaCoin/novacoin/core/state"
 )
 
 // Common errors.

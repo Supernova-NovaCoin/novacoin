@@ -6,7 +6,7 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/novacoin/novacoin/core/state"
+	"github.com/Supernova-NovaCoin/novacoin/core/state"
 )
 
 // Receipt status codes.

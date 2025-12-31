@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/novacoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
 )
 
 // ValidatorSetEntry represents a validator in the active set.

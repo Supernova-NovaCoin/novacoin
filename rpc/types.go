@@ -15,7 +15,7 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/novacoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
 )
 
 // JSON-RPC 2.0 types

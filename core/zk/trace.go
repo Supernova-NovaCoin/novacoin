@@ -6,7 +6,7 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/novacoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
 )
 
 // TraceStep represents a single step in the execution trace.

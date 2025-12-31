@@ -6,7 +6,7 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/novacoin/novacoin/crypto"
+	"github.com/Supernova-NovaCoin/novacoin/crypto"
 )
 
 // NodeType represents the type of a trie node.

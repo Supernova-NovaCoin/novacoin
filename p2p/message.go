@@ -6,8 +6,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/novacoin/novacoin/core/dag"
-	"github.com/novacoin/novacoin/crypto"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/crypto"
 )
 
 // MessageType represents the type of P2P message.

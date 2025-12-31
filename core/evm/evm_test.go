@@ -4,7 +4,7 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/novacoin/novacoin/core/state"
+	"github.com/Supernova-NovaCoin/novacoin/core/state"
 )
 
 // === Stack Tests ===

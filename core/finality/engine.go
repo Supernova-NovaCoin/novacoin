@@ -17,8 +17,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/novacoin/novacoin/core/dag"
-	"github.com/novacoin/novacoin/core/mysticeti"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/mysticeti"
 )
 
 // Common errors.

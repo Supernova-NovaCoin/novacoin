@@ -1,4 +1,4 @@
-module github.com/novacoin/novacoin
+module github.com/Supernova-NovaCoin/novacoin
 
 go 1.24.0
 

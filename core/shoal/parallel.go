@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/novacoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
 )
 
 // ParallelDAG represents one of the parallel DAGs in Shoal++.

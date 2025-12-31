@@ -4,7 +4,7 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/novacoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

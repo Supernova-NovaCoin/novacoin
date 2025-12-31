@@ -4,7 +4,7 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/novacoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
 )
 
 // === Field Element Tests ===

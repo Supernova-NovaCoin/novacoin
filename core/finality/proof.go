@@ -8,7 +8,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/novacoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
 )
 
 // ProofVersion is the current finality proof format version.

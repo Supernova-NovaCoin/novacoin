@@ -191,7 +191,7 @@ package dag
 
 import (
     "time"
-    "github.com/novacoin/crypto"
+    "github.com/Supernova-NovaCoin/crypto"
 )
 
 // Vertex represents a block in the DAG with all consensus metadata
@@ -730,7 +730,7 @@ package shoal
 import (
     "sync"
 
-    "github.com/novacoin/core/dag"
+    "github.com/Supernova-NovaCoin/core/dag"
 )
 
 // WaveState tracks the progress of a single wave
@@ -872,7 +872,7 @@ import (
     "sync"
     "time"
 
-    "github.com/novacoin/core/dag"
+    "github.com/Supernova-NovaCoin/core/dag"
 )
 
 // AnchorManager implements Shoal++ multi-anchor consensus
@@ -1135,7 +1135,7 @@ package mysticeti
 import (
     "sync"
 
-    "github.com/novacoin/core/dag"
+    "github.com/Supernova-NovaCoin/core/dag"
 )
 
 // In Mysticeti, a reference (parent link) IS a vote
@@ -1265,7 +1265,7 @@ import (
     "sync"
     "time"
 
-    "github.com/novacoin/core/dag"
+    "github.com/Supernova-NovaCoin/core/dag"
 )
 
 // CommitCandidate represents a block being evaluated for commit
@@ -1777,12 +1777,12 @@ import (
     "sync"
     "time"
 
-    "github.com/novacoin/core/dag"
-    "github.com/novacoin/core/dagknight"
-    "github.com/novacoin/core/ghostdag"
-    "github.com/novacoin/core/mysticeti"
-    "github.com/novacoin/core/shoal"
-    "github.com/novacoin/core/finality"
+    "github.com/Supernova-NovaCoin/core/dag"
+    "github.com/Supernova-NovaCoin/core/dagknight"
+    "github.com/Supernova-NovaCoin/core/ghostdag"
+    "github.com/Supernova-NovaCoin/core/mysticeti"
+    "github.com/Supernova-NovaCoin/core/shoal"
+    "github.com/Supernova-NovaCoin/core/finality"
 )
 
 // HybridConsensus orchestrates all consensus layers
@@ -1943,7 +1943,7 @@ package consensus
 import (
     "time"
 
-    "github.com/novacoin/core/dagknight"
+    "github.com/Supernova-NovaCoin/core/dagknight"
 )
 
 // Config holds all consensus configuration
@@ -2102,8 +2102,8 @@ import (
     "math/big"
     "sync"
 
-    "github.com/novacoin/core/state"
-    "github.com/novacoin/core/vm"
+    "github.com/Supernova-NovaCoin/core/state"
+    "github.com/Supernova-NovaCoin/core/vm"
 )
 
 // ExecutionTrace captures all state changes for proof generation
@@ -2385,7 +2385,7 @@ package zk
 import (
     "sync"
 
-    "github.com/novacoin/core/state"
+    "github.com/Supernova-NovaCoin/core/state"
 )
 
 // zkStateManager handles state for zkEVM with proof-friendly structure

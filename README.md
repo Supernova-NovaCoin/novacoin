@@ -84,13 +84,13 @@ go build -o novacoin ./cmd/novacoin
 
 ## Related Repositories
 
-- [novacoin-sdk-ts](https://github.com/novacoin/novacoin-sdk-ts) - TypeScript SDK
-- [novacoin-wallet-web](https://github.com/novacoin/novacoin-wallet-web) - Web Wallet
-- [novacoin-wallet-cli](https://github.com/novacoin/novacoin-wallet-cli) - CLI Wallet
-- [novacoin-explorer](https://github.com/novacoin/novacoin-explorer) - Block Explorer
-- [novacoin-dashboard-node](https://github.com/novacoin/novacoin-dashboard-node) - Node Dashboard
-- [novacoin-dashboard-tokens](https://github.com/novacoin/novacoin-dashboard-tokens) - Token Dashboard
-- [novacoin-docs](https://github.com/novacoin/novacoin-docs) - Documentation
+- [novacoin-sdk-ts](https://github.com/Supernova-NovaCoin/novacoin-sdk-ts) - TypeScript SDK
+- [novacoin-wallet-web](https://github.com/Supernova-NovaCoin/novacoin-wallet-web) - Web Wallet
+- [novacoin-wallet-cli](https://github.com/Supernova-NovaCoin/novacoin-wallet-cli) - CLI Wallet
+- [novacoin-explorer](https://github.com/Supernova-NovaCoin/novacoin-explorer) - Block Explorer
+- [novacoin-dashboard-node](https://github.com/Supernova-NovaCoin/novacoin-dashboard-node) - Node Dashboard
+- [novacoin-dashboard-tokens](https://github.com/Supernova-NovaCoin/novacoin-dashboard-tokens) - Token Dashboard
+- [novacoin-docs](https://github.com/Supernova-NovaCoin/novacoin-docs) - Documentation
 
 ## Testing
 

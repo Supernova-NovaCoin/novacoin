@@ -7,10 +7,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/novacoin/novacoin/core/dag"
-	"github.com/novacoin/novacoin/core/evm"
-	"github.com/novacoin/novacoin/core/state"
-	"github.com/novacoin/novacoin/core/types"
+	"github.com/Supernova-NovaCoin/novacoin/core/dag"
+	"github.com/Supernova-NovaCoin/novacoin/core/evm"
+	"github.com/Supernova-NovaCoin/novacoin/core/state"
+	"github.com/Supernova-NovaCoin/novacoin/core/types"
 )
 
 // ExecutionResult contains the result of block execution.
