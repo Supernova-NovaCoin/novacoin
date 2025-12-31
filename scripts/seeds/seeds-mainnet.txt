@@ -1,0 +1,31 @@
+# NovaCoin Mainnet Seed Nodes
+# Format: enode://<pubkey>@<ip>:<port>
+#
+# These are bootstrap nodes for initial network connectivity.
+# Maintained by NovaCoin Foundation.
+#
+# Last updated: GENESIS_DATE
+#
+# Region distribution:
+# - 2x US (East, West)
+# - 2x Europe (Frankfurt, London)
+# - 1x Asia (Singapore)
+# - 1x South America (Sao Paulo)
+
+# US East (Virginia)
+enode://PUBKEY_US_EAST@seed-us-east.novacoin.io:30303
+
+# US West (Oregon)
+enode://PUBKEY_US_WEST@seed-us-west.novacoin.io:30303
+
+# Europe (Frankfurt)
+enode://PUBKEY_EU_FRANKFURT@seed-eu-frankfurt.novacoin.io:30303
+
+# Europe (London)
+enode://PUBKEY_EU_LONDON@seed-eu-london.novacoin.io:30303
+
+# Asia (Singapore)
+enode://PUBKEY_ASIA_SINGAPORE@seed-asia-singapore.novacoin.io:30303
+
+# South America (Sao Paulo)
+enode://PUBKEY_SA_SAOPAULO@seed-sa-saopaulo.novacoin.io:30303

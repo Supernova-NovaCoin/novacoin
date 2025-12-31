@@ -1,0 +1,225 @@
+# NovaCoin Docker Compose Configuration
+# Full stack deployment for development and production
+
+version: '3.8'
+
+services:
+  # ============================================
+  # Full Node
+  # ============================================
+  novacoin-node:
+    build:
+      context: ../..
+      dockerfile: scripts/docker/Dockerfile
+    image: novacoin/node:latest
+    container_name: novacoin-node
+    restart: unless-stopped
+    ports:
+      - "30303:30303/tcp"
+      - "30303:30303/udp"
+      - "8545:8545/tcp"
+      - "8546:8546/tcp"
+      - "9090:9090/tcp"
+    volumes:
+      - novacoin-data:/home/novacoin/.novacoin/data
+      - novacoin-logs:/home/novacoin/.novacoin/logs
+    environment:
+      - NOVACOIN_NETWORK=${NETWORK:-mainnet}
+    networks:
+      - novacoin-network
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8545", "-X", "POST", "-H", "Content-Type: application/json", "-d", "{\"jsonrpc\":\"2.0\",\"method\":\"eth_blockNumber\",\"params\":[],\"id\":1}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+
+  # ============================================
+  # Validator Node
+  # ============================================
+  novacoin-validator:
+    build:
+      context: ../..
+      dockerfile: scripts/docker/Dockerfile.validator
+    image: novacoin/validator:latest
+    container_name: novacoin-validator
+    restart: unless-stopped
+    ports:
+      - "30313:30303/tcp"
+      - "30313:30303/udp"
+      - "8555:8545/tcp"
+      - "8556:8546/tcp"
+      - "9091:9090/tcp"
+      - "30314:30304/tcp"
+    volumes:
+      - validator-data:/home/novacoin/.novacoin/data
+      - validator-keys:/home/novacoin/.novacoin/keys:ro
+      - validator-logs:/home/novacoin/.novacoin/logs
+    environment:
+      - NOVACOIN_NETWORK=${NETWORK:-mainnet}
+      - NOVACOIN_ROLE=validator
+    networks:
+      - novacoin-network
+    depends_on:
+      novacoin-node:
+        condition: service_healthy
+    profiles:
+      - validator
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+
+  # ============================================
+  # Prometheus Metrics
+  # ============================================
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: novacoin-prometheus
+    restart: unless-stopped
+    ports:
+      - "9092:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+    networks:
+      - novacoin-network
+    profiles:
+      - monitoring
+
+  # ============================================
+  # Grafana Dashboard
+  # ============================================
+  grafana:
+    image: grafana/grafana:10.2.2
+    container_name: novacoin-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-novacoin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - novacoin-network
+    depends_on:
+      - prometheus
+    profiles:
+      - monitoring
+
+  # ============================================
+  # Block Explorer (Blockscout)
+  # ============================================
+  blockscout-db:
+    image: postgres:15-alpine
+    container_name: novacoin-explorer-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: blockscout
+      POSTGRES_PASSWORD: ${EXPLORER_DB_PASSWORD:-blockscout}
+      POSTGRES_DB: blockscout
+    volumes:
+      - explorer-db:/var/lib/postgresql/data
+    networks:
+      - novacoin-network
+    profiles:
+      - explorer
+
+  blockscout:
+    image: blockscout/blockscout:latest
+    container_name: novacoin-explorer
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      - ETHEREUM_JSONRPC_VARIANT=geth
+      - ETHEREUM_JSONRPC_HTTP_URL=http://novacoin-node:8545
+      - ETHEREUM_JSONRPC_WS_URL=ws://novacoin-node:8546
+      - DATABASE_URL=postgresql://blockscout:${EXPLORER_DB_PASSWORD:-blockscout}@blockscout-db:5432/blockscout
+      - NETWORK=NovaCoin
+      - SUBNETWORK=${NETWORK:-Mainnet}
+      - CHAIN_ID=1
+      - COIN=NOVA
+      - COIN_NAME=NovaCoin
+      - LOGO=/images/novacoin-logo.svg
+      - LOGO_FOOTER=/images/novacoin-logo.svg
+      - SUPPORTED_CHAINS=[]
+      - SHOW_PRICE_CHART=false
+      - DISABLE_EXCHANGE_RATES=true
+      - ENABLE_TXS_STATS=true
+      - SHOW_TXS_CHART=true
+      - HISTORY_FETCH_INTERVAL=30
+      - TXS_HISTORIAN_INIT_LAG=0
+      - TXS_STATS_DAYS_TO_COMPILE_AT_INIT=10
+      - POOL_SIZE=50
+      - POOL_SIZE_API=10
+      - ECTO_USE_SSL=false
+      - SECRET_KEY_BASE=${EXPLORER_SECRET:-generate-a-secret-key-base-at-least-64-chars}
+    networks:
+      - novacoin-network
+    depends_on:
+      - blockscout-db
+      - novacoin-node
+    profiles:
+      - explorer
+
+  # ============================================
+  # Redis (for caching)
+  # ============================================
+  redis:
+    image: redis:7-alpine
+    container_name: novacoin-redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    networks:
+      - novacoin-network
+    profiles:
+      - explorer
+
+# ============================================
+# Networks
+# ============================================
+networks:
+  novacoin-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+# ============================================
+# Volumes
+# ============================================
+volumes:
+  novacoin-data:
+    name: novacoin-data
+  novacoin-logs:
+    name: novacoin-logs
+  validator-data:
+    name: novacoin-validator-data
+  validator-keys:
+    name: novacoin-validator-keys
+  validator-logs:
+    name: novacoin-validator-logs
+  prometheus-data:
+    name: novacoin-prometheus-data
+  grafana-data:
+    name: novacoin-grafana-data
+  explorer-db:
+    name: novacoin-explorer-db
+  redis-data:
+    name: novacoin-redis-data

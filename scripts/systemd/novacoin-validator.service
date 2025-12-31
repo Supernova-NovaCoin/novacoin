@@ -1,0 +1,79 @@
+[Unit]
+Description=NovaCoin Validator Node
+Documentation=https://docs.novacoin.io
+After=network-online.target
+Wants=network-online.target
+
+# Ensure validator doesn't start if key is missing
+ConditionPathExists=/home/novacoin/.novacoin/keys/validator.key
+
+[Service]
+Type=simple
+User=novacoin
+Group=novacoin
+
+# Working directory
+WorkingDirectory=/home/novacoin
+
+# Environment file (optional)
+EnvironmentFile=-/etc/novacoin/validator.env
+
+# Validator binary and arguments
+ExecStart=/usr/local/bin/novacoin \
+    --datadir /home/novacoin/.novacoin/data \
+    --networkid ${NETWORK_ID:-1} \
+    --validator \
+    --validatorkey /home/novacoin/.novacoin/keys/validator.key \
+    --http \
+    --http.addr 127.0.0.1 \
+    --http.port 8545 \
+    --http.vhosts localhost \
+    --ws \
+    --ws.addr 127.0.0.1 \
+    --ws.port 8546 \
+    --ws.origins localhost \
+    --port 30303 \
+    --metrics \
+    --metrics.addr 0.0.0.0 \
+    --metrics.port 9090 \
+    --maxpeers 100 \
+    --verbosity 3
+
+# Pre-start check
+ExecStartPre=/bin/sh -c 'test -f /home/novacoin/.novacoin/keys/validator.key || (echo "Validator key not found!" && exit 1)'
+
+# Restart policy - more aggressive for validators
+Restart=always
+RestartSec=5
+TimeoutStartSec=180
+TimeoutStopSec=120
+
+# Watchdog - restart if unresponsive
+WatchdogSec=300
+
+# Process limits
+LimitNOFILE=131072
+LimitNPROC=131072
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/novacoin/.novacoin
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=novacoin-validator
+
+# Resource limits - higher for validators
+MemoryMax=16G
+TasksMax=8192
+CPUWeight=90
+
+# Nice value - high priority for validators
+Nice=-10
+
+[Install]
+WantedBy=multi-user.target

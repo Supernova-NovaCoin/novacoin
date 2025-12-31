@@ -1,0 +1,238 @@
+# NovaCoin Mainnet Configuration
+# Version: 1.0.0
+# WARNING: This is production configuration. Handle with extreme care.
+
+# =============================================================================
+# NETWORK CONFIGURATION
+# =============================================================================
+network:
+  name: "NovaCoin Mainnet"
+  chain_id: 1
+  network_id: 1
+
+  # Genesis timestamp (Unix epoch)
+  genesis_timestamp: 0  # Set during deployment
+
+  # P2P Configuration
+  p2p:
+    port: 30303
+    max_peers: 100
+    max_pending_peers: 50
+    dial_ratio: 3
+
+  # Bootstrap nodes (populated during genesis)
+  bootnodes: []
+
+# =============================================================================
+# CONSENSUS CONFIGURATION
+# =============================================================================
+consensus:
+  # DAGKnight parameters
+  dagknight:
+    initial_k: 0.33
+    min_k: 0.25
+    max_k: 0.50
+    adaptation_rate: 0.01
+    latency_window: 100  # blocks
+
+  # GHOSTDAG parameters
+  ghostdag:
+    blue_score_threshold: 0.5
+    anticone_limit: 255
+
+  # Shoal++ parameters
+  shoal:
+    parallel_dags: 4
+    dag_stagger_ms: 125
+    wave_timeout_ms: 5000
+    anchor_selection: "stake_weighted"
+
+  # Mysticeti parameters
+  mysticeti:
+    commit_depth: 3
+    fast_path_rounds: 2
+    vote_threshold: 0.67  # 2/3 stake
+    round_timeout_ms: 3000
+
+  # Block parameters
+  block:
+    min_time_ms: 500
+    max_time_ms: 10000
+    target_time_ms: 1000
+    max_size_bytes: 5242880  # 5MB
+    max_transactions: 10000
+
+# =============================================================================
+# PROOF OF STAKE CONFIGURATION
+# =============================================================================
+pos:
+  # Staking parameters
+  staking:
+    min_stake: "32000000000000000000"  # 32 NOVA in wei
+    max_stake: "32000000000000000000000"  # 32,000 NOVA
+    unbonding_period_epochs: 21  # ~7 days
+    epoch_length_blocks: 32
+
+  # Validator parameters
+  validators:
+    max_validators: 10000
+    min_validators: 100
+    activation_queue_limit: 100
+    exit_queue_limit: 100
+
+  # Rewards configuration
+  rewards:
+    base_reward_factor: 64
+    proposer_reward_quotient: 8
+    whistleblower_reward_quotient: 512
+    annual_inflation_rate: 0.02  # 2%
+
+  # Slashing parameters
+  slashing:
+    downtime_penalty: 0.01  # 1%
+    equivocation_penalty: 0.05  # 5%
+    invalid_block_penalty: 0.10  # 10%
+    min_slashing_penalty: "1000000000000000000"  # 1 NOVA
+
+# =============================================================================
+# MEV RESISTANCE CONFIGURATION
+# =============================================================================
+mev:
+  enabled: true
+  threshold_encryption:
+    threshold: 67
+    total_shares: 100
+    key_refresh_epochs: 100
+  blind_permutation: true
+  commit_reveal_blocks: 2
+
+# =============================================================================
+# ZK CONFIGURATION
+# =============================================================================
+zk:
+  enabled: true
+  prover:
+    security_bits: 128
+    blowup_factor: 8
+    num_queries: 50
+    grinding_factor: 16
+  batch_size: 100
+  recursive_proofs: true
+
+# =============================================================================
+# RPC CONFIGURATION
+# =============================================================================
+rpc:
+  http:
+    enabled: true
+    port: 8545
+    cors_origins: ["*"]
+    virtual_hosts: ["*"]
+    api_modules: ["eth", "net", "web3", "nova"]
+
+  websocket:
+    enabled: true
+    port: 8546
+    origins: ["*"]
+    api_modules: ["eth", "net", "web3", "nova"]
+
+  rate_limiting:
+    enabled: true
+    requests_per_second: 100
+    burst: 200
+
+# =============================================================================
+# METRICS CONFIGURATION
+# =============================================================================
+metrics:
+  enabled: true
+  port: 9090
+  prometheus: true
+
+# =============================================================================
+# SECURITY CONFIGURATION
+# =============================================================================
+security:
+  # Minimum requirements
+  min_go_version: "1.21"
+  required_ports: [30303, 8545, 8546, 9090]
+
+  # TLS for RPC (production)
+  tls:
+    enabled: false  # Enable in production with proper certs
+    cert_file: ""
+    key_file: ""
+
+  # Authentication
+  auth:
+    enabled: false  # Enable for private APIs
+    jwt_secret_file: ""
+
+# =============================================================================
+# GENESIS ALLOCATION
+# =============================================================================
+genesis:
+  # Initial token distribution
+  allocation:
+    # Foundation (20%)
+    foundation:
+      address: ""  # Set during deployment
+      amount: "200000000000000000000000000"  # 200M NOVA
+      vesting_months: 48
+
+    # Team (15%)
+    team:
+      address: ""
+      amount: "150000000000000000000000000"  # 150M NOVA
+      vesting_months: 36
+      cliff_months: 12
+
+    # Ecosystem (25%)
+    ecosystem:
+      address: ""
+      amount: "250000000000000000000000000"  # 250M NOVA
+
+    # Public sale (20%)
+    public:
+      address: ""
+      amount: "200000000000000000000000000"  # 200M NOVA
+
+    # Validators (10%)
+    validators:
+      address: ""
+      amount: "100000000000000000000000000"  # 100M NOVA
+
+    # Treasury (10%)
+    treasury:
+      address: ""
+      amount: "100000000000000000000000000"  # 100M NOVA
+
+  # Total supply: 1,000,000,000 NOVA (1 billion)
+  total_supply: "1000000000000000000000000000"
+
+# =============================================================================
+# DEPLOYMENT REQUIREMENTS
+# =============================================================================
+deployment:
+  # Minimum node requirements
+  node_requirements:
+    cpu_cores: 8
+    ram_gb: 32
+    storage_gb: 2000
+    storage_type: "nvme_ssd"
+    bandwidth_mbps: 100
+
+  # Validator requirements
+  validator_requirements:
+    cpu_cores: 16
+    ram_gb: 64
+    storage_gb: 4000
+    storage_type: "nvme_ssd"
+    bandwidth_mbps: 500
+    uptime_sla: 0.999  # 99.9%
+
+  # Multi-sig requirements
+  multisig:
+    required_signatures: 4
+    total_signers: 7
+    timelock_hours: 24

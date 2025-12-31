@@ -1,0 +1,117 @@
+# NovaCoin Validator Node Dockerfile
+# Enhanced security and monitoring for validator operations
+
+# ============================================
+# Stage 1: Builder
+# ============================================
+FROM golang:1.21-alpine AS builder
+
+# Install build dependencies
+RUN apk add --no-cache \
+    make \
+    gcc \
+    musl-dev \
+    linux-headers \
+    git
+
+# Set working directory
+WORKDIR /build
+
+# Copy go mod files first for caching
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy source code
+COPY . .
+
+# Build the node binary with validator optimizations
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
+    -ldflags="-w -s -X main.Version=$(git describe --tags --always 2>/dev/null || echo 'dev') -X main.Role=validator" \
+    -o novacoin \
+    ./cmd/novacoin/...
+
+# ============================================
+# Stage 2: Runtime
+# ============================================
+FROM alpine:3.19
+
+# Install runtime dependencies
+RUN apk add --no-cache \
+    ca-certificates \
+    tzdata \
+    curl \
+    jq \
+    openssl
+
+# Create non-root user for security
+RUN addgroup -g 1000 novacoin && \
+    adduser -u 1000 -G novacoin -s /bin/sh -D novacoin
+
+# Create necessary directories with secure permissions
+RUN mkdir -p /home/novacoin/.novacoin/data && \
+    mkdir -p /home/novacoin/.novacoin/keys && \
+    mkdir -p /home/novacoin/.novacoin/logs && \
+    mkdir -p /home/novacoin/.novacoin/secrets && \
+    chown -R novacoin:novacoin /home/novacoin/.novacoin && \
+    chmod 700 /home/novacoin/.novacoin/keys && \
+    chmod 700 /home/novacoin/.novacoin/secrets
+
+# Copy binary from builder
+COPY --from=builder /build/novacoin /usr/local/bin/novacoin
+
+# Set permissions
+RUN chmod +x /usr/local/bin/novacoin
+
+# Switch to non-root user
+USER novacoin
+WORKDIR /home/novacoin
+
+# Environment variables for validator
+ENV NOVACOIN_DATADIR=/home/novacoin/.novacoin/data
+ENV NOVACOIN_NETWORK=mainnet
+ENV NOVACOIN_ROLE=validator
+ENV NOVACOIN_METRICS=true
+
+# Expose ports
+# P2P networking
+EXPOSE 30303/tcp
+EXPOSE 30303/udp
+# HTTP RPC (should be restricted in production)
+EXPOSE 8545/tcp
+# WebSocket RPC (should be restricted in production)
+EXPOSE 8546/tcp
+# Metrics (Prometheus)
+EXPOSE 9090/tcp
+# Validator P2P (dedicated channel)
+EXPOSE 30304/tcp
+
+# Health check - more frequent for validators
+HEALTHCHECK --interval=15s --timeout=5s --start-period=120s --retries=5 \
+    CMD curl -sf http://localhost:8545 -X POST \
+        -H "Content-Type: application/json" \
+        -d '{"jsonrpc":"2.0","method":"nova_validatorStatus","params":[],"id":1}' \
+        | jq -e '.result.isActive == true' \
+        || exit 1
+
+# Validator-specific entrypoint
+ENTRYPOINT ["novacoin"]
+CMD [ \
+    "--datadir", "/home/novacoin/.novacoin/data", \
+    "--networkid", "1", \
+    "--validator", \
+    "--validatorkey", "/home/novacoin/.novacoin/keys/validator.key", \
+    "--http", \
+    "--http.addr", "127.0.0.1", \
+    "--http.port", "8545", \
+    "--http.vhosts", "localhost", \
+    "--ws", \
+    "--ws.addr", "127.0.0.1", \
+    "--ws.port", "8546", \
+    "--ws.origins", "localhost", \
+    "--port", "30303", \
+    "--metrics", \
+    "--metrics.addr", "0.0.0.0", \
+    "--metrics.port", "9090", \
+    "--maxpeers", "100", \
+    "--verbosity", "3" \
+]

@@ -1,0 +1,65 @@
+[Unit]
+Description=NovaCoin Full Node
+Documentation=https://docs.novacoin.io
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=novacoin
+Group=novacoin
+
+# Working directory
+WorkingDirectory=/home/novacoin
+
+# Environment file (optional)
+EnvironmentFile=-/etc/novacoin/node.env
+
+# Node binary and arguments
+ExecStart=/usr/local/bin/novacoin \
+    --datadir /home/novacoin/.novacoin/data \
+    --networkid ${NETWORK_ID:-1} \
+    --http \
+    --http.addr 0.0.0.0 \
+    --http.port 8545 \
+    --http.vhosts "*" \
+    --http.corsdomain "*" \
+    --ws \
+    --ws.addr 0.0.0.0 \
+    --ws.port 8546 \
+    --ws.origins "*" \
+    --port 30303 \
+    --metrics \
+    --metrics.addr 127.0.0.1 \
+    --metrics.port 9090 \
+    --maxpeers 50 \
+    --verbosity 3
+
+# Restart policy
+Restart=always
+RestartSec=10
+TimeoutStartSec=120
+TimeoutStopSec=60
+
+# Process limits
+LimitNOFILE=65535
+LimitNPROC=65535
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/novacoin/.novacoin
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=novacoin-node
+
+# Resource limits
+MemoryMax=8G
+TasksMax=4096
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,113 @@
+{
+  "config": {
+    "chainId": 1,
+    "networkName": "NovaCoin Mainnet",
+    "consensus": {
+      "engine": "pos-dagknight",
+      "blockTime": 500,
+      "adaptiveK": {
+        "min": 0.25,
+        "max": 0.50,
+        "default": 0.33
+      },
+      "mysticeti": {
+        "rounds": 3,
+        "quorumThreshold": 0.67
+      },
+      "shoal": {
+        "parallelDAGs": 4,
+        "waveInterval": 125
+      }
+    },
+    "pos": {
+      "minStake": "32000000000000000000",
+      "minDelegation": "1000000000000000000",
+      "maxValidators": 1000,
+      "unbondingPeriod": 1814400,
+      "slashing": {
+        "equivocation": 0.05,
+        "downtime": 0.01,
+        "invalidBlock": 0.10
+      }
+    },
+    "mev": {
+      "thresholdEncryption": true,
+      "threshold": 67,
+      "totalShares": 100,
+      "blindPermutation": true
+    },
+    "evm": {
+      "homesteadBlock": 0,
+      "eip150Block": 0,
+      "eip155Block": 0,
+      "eip158Block": 0,
+      "byzantiumBlock": 0,
+      "constantinopleBlock": 0,
+      "petersburgBlock": 0,
+      "istanbulBlock": 0,
+      "berlinBlock": 0,
+      "londonBlock": 0,
+      "shanghaiBlock": 0
+    }
+  },
+  "nonce": "0x0",
+  "timestamp": "GENESIS_TIMESTAMP",
+  "extraData": "0x4e6f7661436f696e2047656e65736973",
+  "gasLimit": "0x1c9c380",
+  "difficulty": "0x1",
+  "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "coinbase": "0x0000000000000000000000000000000000000000",
+  "alloc": {
+    "FOUNDATION_ADDRESS": {
+      "balance": "150000000000000000000000000",
+      "comment": "Foundation Reserve (15%)"
+    },
+    "ECOSYSTEM_ADDRESS": {
+      "balance": "250000000000000000000000000",
+      "comment": "Ecosystem Development (25%)"
+    },
+    "COMMUNITY_ADDRESS": {
+      "balance": "400000000000000000000000000",
+      "comment": "Community & Staking Rewards (40%)"
+    },
+    "TEAM_VESTING_ADDRESS": {
+      "balance": "120000000000000000000000000",
+      "comment": "Core Contributors (12%) - 4-year vesting"
+    },
+    "PUBLIC_LAUNCH_ADDRESS": {
+      "balance": "80000000000000000000000000",
+      "comment": "Public Launch (8%)"
+    }
+  },
+  "validators": [
+    {
+      "address": "VALIDATOR_1_ADDRESS",
+      "pubkey": "VALIDATOR_1_PUBKEY",
+      "stake": "1000000000000000000000000",
+      "name": "Foundation Validator 1"
+    },
+    {
+      "address": "VALIDATOR_2_ADDRESS",
+      "pubkey": "VALIDATOR_2_PUBKEY",
+      "stake": "1000000000000000000000000",
+      "name": "Foundation Validator 2"
+    },
+    {
+      "address": "VALIDATOR_3_ADDRESS",
+      "pubkey": "VALIDATOR_3_PUBKEY",
+      "stake": "1000000000000000000000000",
+      "name": "Foundation Validator 3"
+    },
+    {
+      "address": "VALIDATOR_4_ADDRESS",
+      "pubkey": "VALIDATOR_4_PUBKEY",
+      "stake": "1000000000000000000000000",
+      "name": "Foundation Validator 4"
+    }
+  ],
+  "seeds": [
+    "SEED_1_ENODE",
+    "SEED_2_ENODE",
+    "SEED_3_ENODE"
+  ]
+}

@@ -1,0 +1,16 @@
+# NovaCoin Testnet Seed Nodes
+# Format: enode://<pubkey>@<ip>:<port>
+#
+# These are bootstrap nodes for testnet connectivity.
+# Used for development and testing.
+#
+# Last updated: GENESIS_DATE
+
+# Testnet Seed 1 (US)
+enode://PUBKEY_TESTNET_1@testnet-seed1.novacoin.io:30303
+
+# Testnet Seed 2 (Europe)
+enode://PUBKEY_TESTNET_2@testnet-seed2.novacoin.io:30303
+
+# Testnet Seed 3 (Asia)
+enode://PUBKEY_TESTNET_3@testnet-seed3.novacoin.io:30303
