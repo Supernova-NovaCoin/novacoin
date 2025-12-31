@@ -384,14 +384,16 @@ func (node *Node) initRPC() error {
 	cfg := node.config.RPC
 
 	serverCfg := &rpc.ServerConfig{
-		HTTPEnabled: cfg.HTTPEnabled,
-		HTTPHost:    cfg.HTTPHost,
-		HTTPPort:    cfg.HTTPPort,
-		WSEnabled:   cfg.WSEnabled,
-		WSHost:      cfg.WSHost,
-		WSPort:      cfg.WSPort,
-		HTTPCors:    cfg.CorsOrigins,
-		WSOrigins:   cfg.CorsOrigins,
+		HTTPEnabled:       cfg.HTTPEnabled,
+		HTTPHost:          cfg.HTTPHost,
+		HTTPPort:          cfg.HTTPPort,
+		WSEnabled:         cfg.WSEnabled,
+		WSHost:            cfg.WSHost,
+		WSPort:            cfg.WSPort,
+		HTTPCors:          cfg.CorsOrigins,
+		WSOrigins:         cfg.CorsOrigins,
+		MaxRequestSize:    5 * 1024 * 1024, // 5MB
+		EnabledNamespaces: []string{"eth", "net", "web3"},
 	}
 
 	// Create backend for RPC

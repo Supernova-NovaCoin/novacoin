@@ -141,8 +141,13 @@ func analyzeMethod(method reflect.Method, receiver reflect.Value) (*methodInfo, 
 
 // Handle processes a JSON-RPC request and returns a response.
 func (h *Handler) Handle(ctx context.Context, data []byte) []byte {
+	// Check for empty request
+	if len(data) == 0 {
+		return h.errorResponse(nil, ErrParseError)
+	}
+
 	// Check for batch request
-	if len(data) > 0 && data[0] == '[' {
+	if data[0] == '[' {
 		return h.handleBatch(ctx, data)
 	}
 

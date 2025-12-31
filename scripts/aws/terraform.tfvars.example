@@ -1,0 +1,55 @@
+# NovaCoin AWS Deployment Configuration
+# Copy this file to terraform.tfvars and customize
+
+# =============================================================================
+# BASIC CONFIGURATION
+# =============================================================================
+
+# AWS region for deployment
+aws_region = "ap-southeast-1"  # Singapore
+
+# Environment name (testnet/mainnet)
+environment = "testnet"
+
+# Blockchain chain ID
+chain_id = 2
+
+# =============================================================================
+# NODE COUNTS (Light config for testing)
+# =============================================================================
+
+# Number of validator nodes (minimum 4 required for BFT consensus)
+validator_count = 4
+
+# Number of public RPC nodes
+rpc_node_count = 1
+
+# =============================================================================
+# SECURITY
+# =============================================================================
+
+# CIDR blocks allowed for SSH access
+# IMPORTANT: Restrict this in production!
+ssh_allowed_cidrs = ["0.0.0.0/0"]
+
+# =============================================================================
+# INSTANCE TYPES (Light config for testing)
+# =============================================================================
+
+# Bootnode instance type
+instance_type_bootnode = "t3.small"      # 2 vCPU, 2GB - ~$15/mo
+
+# Validator instance type
+instance_type_validator = "t3.medium"    # 2 vCPU, 4GB - ~$30/mo
+
+# RPC node instance type
+instance_type_rpc = "t3.small"           # 2 vCPU, 2GB - ~$15/mo
+
+# =============================================================================
+# STORAGE (Light config for testing)
+# =============================================================================
+
+# EBS volume sizes in GB
+volume_size_bootnode = 30
+volume_size_validator = 50
+volume_size_rpc = 50

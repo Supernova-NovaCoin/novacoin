@@ -146,7 +146,7 @@ func DefaultConfig() *Config {
 // DefaultNetworkConfig returns default network settings.
 func DefaultNetworkConfig() *NetworkConfig {
 	return &NetworkConfig{
-		ListenAddr:     "/ip4/0.0.0.0/tcp/30303",
+		ListenAddr:     "0.0.0.0:30303",
 		ListenPort:     30303,
 		BootstrapPeers: []string{},
 		MaxPeers:       50,

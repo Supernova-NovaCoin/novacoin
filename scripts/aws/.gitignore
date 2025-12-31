@@ -1,0 +1,27 @@
+# Terraform
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+.terraform/
+.terraform.lock.hcl
+tfplan
+outputs.json
+
+# Keys (NEVER commit)
+keys/
+*.pem
+*.key
+
+# Environment
+.env
+
+# Terraform vars with secrets
+terraform.tfvars
+*.auto.tfvars
+
+# Local files
+*.log
+crash.log
+
+# Deployment documentation (contains IPs/endpoints)
+aws_deploy_process.md

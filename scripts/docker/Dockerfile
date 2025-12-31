@@ -4,12 +4,13 @@
 # ============================================
 # Stage 1: Builder
 # ============================================
-FROM golang:1.21-alpine AS builder
+FROM golang:1.24-alpine AS builder
 
-# Install build dependencies
+# Install build dependencies (including g++ for BLS library)
 RUN apk add --no-cache \
     make \
     gcc \
+    g++ \
     musl-dev \
     linux-headers \
     git
@@ -24,8 +25,8 @@ RUN go mod download
 # Copy source code
 COPY . .
 
-# Build the node binary
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
+# Build the node binary (CGO enabled for BLS library)
+RUN CGO_ENABLED=1 go build \
     -ldflags="-w -s -X main.Version=$(git describe --tags --always 2>/dev/null || echo 'dev')" \
     -o novacoin \
     ./cmd/novacoin/...
