@@ -1,6 +1,6 @@
-# Binaries
-novacoin
-novacoin.exe
+# Binaries (only at root level)
+/novacoin
+/novacoin.exe
 *.exe
 *.exe~
 *.dll
